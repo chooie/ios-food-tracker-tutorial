@@ -15,6 +15,7 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   @IBOutlet weak var mealNameLabel: UILabel!
   @IBOutlet weak var nameTextField: UITextField!
   @IBOutlet weak var photoImageView: UIImageView!
+  @IBOutlet weak var ratingControl: RatingControl!
   
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -54,9 +55,6 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   }
 
   //MARK: Actions
-  @IBAction func setDefaultLabelText(_ sender: UIButton) {
-    mealNameLabel.text = "Default Text"
-  }
   @IBAction func selectImageFromPhotoLibrary(_ sender: UITapGestureRecognizer) {
     func onlyAllowPhotosToBePicked(imagePickerController:
       UIImagePickerController) {
