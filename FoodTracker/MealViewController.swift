@@ -28,6 +28,12 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     nameTextField.delegate = self
+    if let meal = meal {
+      navigationItem.title = meal.name
+      nameTextField.text = meal.name
+      photoImageView.image = meal.photo
+      ratingControl.rating = meal.rating
+    }
     updateSaveButtonState()
   }
 
@@ -86,7 +92,6 @@ UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     let photo = photoImageView.image
     let rating = ratingControl.rating
     meal = Meal(name: name, photo: photo, rating: rating)
-
   }
 
   //MARK: Actions

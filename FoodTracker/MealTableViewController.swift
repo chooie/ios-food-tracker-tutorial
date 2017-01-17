@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import os.log
 
 class MealTableViewController: UITableViewController {
 
@@ -86,15 +87,31 @@ class MealTableViewController: UITableViewController {
    }
    */
 
-  /*
-   // MARK: - Navigation
 
-   // In a storyboard-based application, you will often want to do a little preparation before navigation
-   override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-   // Get the new view controller using segue.destinationViewController.
-   // Pass the selected object to the new view controller.
-   }
-   */
+  // MARK: - Navigation
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    super.prepare(for: segue, sender: sender)
+    switch(segue.identifier ?? "") {
+    case "AddItem":
+      os_log("Adding a new meal.", log: OSLog.default, type: .debug)
+    case "ShowDetail":
+      guard let mealDetailViewController = segue.destination
+        as? MealViewController else {
+          fatalError("Unexpected destination: \(segue.destination)")
+      }
+      guard let selectedMealCell = sender as? MealTableViewCell else {
+        fatalError("Unexpected sender: \(sender)")
+      }
+      guard let indexPath = tableView.indexPath(for: selectedMealCell) else {
+        fatalError("The selected cell is not being displayed by he table")
+      }
+
+      let selectedMeal = meals[indexPath.row]
+      mealDetailViewController.meal = selectedMeal
+    default:
+      fatalError("Unexpected Segue Identifier: \(segue.identifier)")
+    }
+  }
 
   //MARK: Actions
   @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
@@ -114,19 +131,19 @@ class MealTableViewController: UITableViewController {
 
     guard let meal1 = Meal(name: "Caprese Salad", photo: photo1, rating: 4)
       else {
-      fatalError("Unable to instantiate meal1")
+        fatalError("Unable to instantiate meal1")
     }
 
     guard let meal2 = Meal(name: "Chicken and Potatoes", photo: photo2,
                            rating: 5) else {
-      fatalError("Unable to instantiate meal2")
+                            fatalError("Unable to instantiate meal2")
     }
 
     guard let meal3 = Meal(name: "Pasta with Meatballs", photo: photo3,
                            rating: 3) else {
-      fatalError("Unable to instantiate meal3")
+                            fatalError("Unable to instantiate meal3")
     }
     meals += [meal1, meal2, meal3]
   }
-
+  
 }
