@@ -8,5 +8,18 @@ Trying out [Appium](http://appium.io/) too.
 
 Notes
 -----
-- Build the iOS app
-    - `xcodebuild -project ios/FoodTracker.xcodeproj  -sdk iphoneos10.1`
+- Build the iOS app:
+
+        xcodebuild -project ios/FoodTracker.xcodeproj  -sdk iphoneos10.1
+
+- Start the appium server:
+
+        appium
+
+- Run all the tests
+
+        mvn -f ./appium clean test
+
+  or some tests
+
+        mvn -f ./appium -DFoodTracker.ios.<SomeTest>
