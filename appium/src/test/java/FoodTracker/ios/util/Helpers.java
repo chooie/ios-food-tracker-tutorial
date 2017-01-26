@@ -17,13 +17,11 @@ public abstract class Helpers {
   private static WebDriverWait driverWait;
 
   /**
-   * Initialize the webdriver. Must be called before using any helper methods. *
+   * Initialize the webdriver. Must be called before using any helper methods.
    */
-  public static void init(AppiumDriver webDriver) {
+  static void init(AppiumDriver webDriver) {
     driver = webDriver;
-    int timeoutInSeconds = 60;
-    // must wait at least 60 seconds for running on Sauce.
-    // waiting for 30 seconds works locally however it fails on Sauce.
+    int timeoutInSeconds = 10;
     driverWait = new WebDriverWait(webDriver, timeoutInSeconds);
   }
 
@@ -49,14 +47,14 @@ public abstract class Helpers {
   /**
    * Return an element by locator *
    */
-  public static MobileElement element(By locator) {
+  private static MobileElement element(By locator) {
     return w(driver.findElement(locator));
   }
 
   /**
    * Return a list of elements by locator *
    */
-  public static List<MobileElement> elements(By locator) {
+  private static List<MobileElement> elements(By locator) {
     return w(driver.findElements(locator));
   }
 
@@ -70,29 +68,29 @@ public abstract class Helpers {
   /**
    * Return a list of elements by tag name *
    */
-  public static List<MobileElement> tags(String tagName) {
+  private static List<MobileElement> tags(String tagName) {
     return elements(for_tags(tagName));
   }
 
   /**
    * Return a tag name locator *
    */
-  public static By for_tags(String tagName) {
+  private static By for_tags(String tagName) {
     return By.className(tagName);
   }
 
   /**
    * Return a static text element by xpath index *
    */
-  public static MobileElement text(int xpathIndex) {
+  private static MobileElement text(int xpathIndex) {
     return element(for_text(xpathIndex));
   }
 
   /**
    * Return a static text locator by xpath index *
    */
-  public static By for_text(int xpathIndex) {
-    return By.xpath("//UIAStaticText[" + xpathIndex + "]");
+  private static By for_text(int xpathIndex) {
+    return By.xpath("//XCUIElementTypeStaticText[" + xpathIndex + "]");
   }
 
   /**
@@ -105,14 +103,23 @@ public abstract class Helpers {
   /**
    * Return a static text locator that contains text *
    */
-  public static By for_text(String text) {
+  private static By for_text(String text) {
+    String commaSeparator = "\",\"";
+    String backBracket = "\"), \"";
     String up = text.toUpperCase();
     String down = text.toLowerCase();
-    return By.xpath("//UIAStaticText[@visible=\"true\" and (contains(translate(@name,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@hint,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@label,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\") or contains(translate(@value,\"" + up
-        + "\",\"" + down + "\"), \"" + down + "\"))]");
+    return By.xpath(
+        "//XCUIElementTypeStaticText[@visible=\"true\" and " +
+            "(contains(translate(@name,\"" +
+            up + commaSeparator + down + backBracket + down +
+            "\") or contains(translate(@hint,\"" +
+            up + commaSeparator + down + backBracket + down +
+            "\") or contains(translate(@label,\"" +
+            up + commaSeparator + down + backBracket + down +
+            "\") or contains(translate(@value,\"" +
+            up + commaSeparator + down + backBracket + down +
+            "\"))]"
+    );
   }
 
   /**
@@ -125,23 +132,29 @@ public abstract class Helpers {
   /**
    * Return a static text locator by exact text *
    */
-  public static By for_text_exact(String text) {
-    return By.xpath("//UIAStaticText[@visible=\"true\" and (@name=\"" + text
+  private static By for_text_exact(String text) {
+    return By.xpath(
+        "//XCUIElementTypeStaticText[@visible=\"true\" and (@name=\"" + text
         + "\" or @hint=\"" + text + "\" or @label=\"" + text
-        + "\" or @value=\"" + text + "\")]");
+        + "\" or @value=\"" + text + "\")]"
+    );
   }
 
   /**
    * Wait 30 seconds for locator to find an element *
    */
   public static MobileElement wait(By locator) {
-    return w(driverWait.until(ExpectedConditions.visibilityOfElementLocated(locator)));
+    return w(driverWait.until(
+        ExpectedConditions.visibilityOfElementLocated(locator))
+    );
   }
 
   /**
-   * Wait 60 seconds for locator to find all elements *
+   * Wait for locator to find all elements *
    */
   public static List<MobileElement> waitAll(By locator) {
-    return w(driverWait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator)));
+    return w(driverWait.until(
+        ExpectedConditions.visibilityOfAllElementsLocatedBy(locator))
+    );
   }
 }

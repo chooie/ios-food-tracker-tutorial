@@ -10,7 +10,7 @@ Notes
 -----
 - Build the iOS app:
 
-        xcodebuild -project ios/FoodTracker.xcodeproj  -sdk iphoneos10.1
+        xcodebuild -project ios/FoodTracker.xcodeproj  -sdk iphonesimulator10.1
 
 - Start the appium server:
 
