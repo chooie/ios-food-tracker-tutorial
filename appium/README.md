@@ -40,4 +40,4 @@ Currently it does not work well so some tweaking is required. This guide
 is based off of the information that was found
 [here](https://github.com/appium/appium-dot-app/issues/577).
 
-![Developer Settings](/appium/resources/developer_settings)
+![Developer Settings](/appium/resources/developer_settings.png)
