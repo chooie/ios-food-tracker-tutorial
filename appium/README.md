@@ -41,3 +41,7 @@ is based off of the information that was found
 [here](https://github.com/appium/appium-dot-app/issues/577).
 
 ![Developer Settings](/appium/resources/developer_settings.png)
+
+![General Settings](/appium/resources/general_settings.png)
+
+![iOS Settings](/appium/resources/ios_settings.png)
